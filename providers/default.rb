@@ -34,7 +34,7 @@ action :config do
     mode '0755'
     variables(
       :application => new_resource.name,
-      :username    => new_resource.user,
+      :username    => new_resource.username,
       :password    => new_resource.password,
       :host        => new_resource.host
     )
@@ -67,6 +67,6 @@ end
 
 def mysql_connection_info
   { host:      new_resource.host,
-    username:  new_resource.db_user,
-    password:  new_resource.db_password }
+    username:  new_resource.username,
+    password:  new_resource.password }
 end
