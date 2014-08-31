@@ -29,7 +29,7 @@ action :config do
   # create database settings file
   template "/var/www/#{new_resource.name}/shared/config/database.yml" do
     source 'database.yml.erb'
-    owner new_resource.owner
+    owner new_resource.deploy_user
     group new_resource.group
     mode '0755'
     variables(
