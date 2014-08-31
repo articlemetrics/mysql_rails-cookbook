@@ -32,6 +32,7 @@ action :config do
     owner new_resource.deploy_user
     group new_resource.group
     mode '0755'
+    cookbook 'mysql_rails'
     variables(
       :application => new_resource.name,
       :username    => new_resource.username,
