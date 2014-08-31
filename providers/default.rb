@@ -40,6 +40,14 @@ action :config do
       :host        => new_resource.host
     )
   end
+
+  # copy it to the current folder
+  file "/var/www/#{new_resource.name}/current/config/database.yml" do
+    owner new_resource.deploy_user
+    group new_resource.group
+    mode 0755
+    content ::File.open("/var/www/#{new_resource.name}/shared/config/database.yml").read
+  end
 end
 
 action :setup do
