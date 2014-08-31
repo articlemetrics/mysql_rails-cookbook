@@ -34,8 +34,8 @@ action :config do
     mode '0755'
     variables(
       :application => new_resource.name,
-      :username    => new_resource.db_user,
-      :password    => new_resource.db_password,
+      :username    => new_resource.user,
+      :password    => new_resource.password,
       :host        => new_resource.host
     )
   end
