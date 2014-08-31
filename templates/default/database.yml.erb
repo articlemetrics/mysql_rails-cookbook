@@ -1,0 +1,17 @@
+defaults: &defaults
+  adapter:   mysql2
+  username:  <%= @username %>
+  password:  <%= @password %>
+  host:      <%= @host %>
+
+production:
+  <<: *defaults
+  database:  <%= @application %>_production
+
+development:
+  <<: *defaults
+  database:  <%= @application %>_development
+
+test:
+  <<: *defaults
+  database:  <%= @application %>_test
