@@ -17,7 +17,7 @@ action :config do
   end
 
   # create application root folder
-  directory "/var/www/#{dir}" do
+  directory "/var/www/#{new_resource.name}" do
     owner new_resource.deploy_user
     group new_resource.group
     mode '0755'
