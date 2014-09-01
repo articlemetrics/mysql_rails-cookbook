@@ -16,20 +16,13 @@ action :config do
     shell "/bin/bash"
   end
 
-  # create application root folder
-  directory "/var/www/#{new_resource.name}" do
-    owner new_resource.deploy_user
-    group new_resource.group
-    mode '0755'
-    recursive true
-  end
-
   # create required folders and set permissions
-  %W{ #{new_resource.name}/current #{new_resource.name}/current/config #{new_resource.name}/shared #{new_resource.name}/shared/config }.each do |dir|
+  %W{ #{new_resource.name} #{new_resource.name}/current #{new_resource.name}/current/config #{new_resource.name}/shared #{new_resource.name}/shared/config }.each do |dir|
     directory "/var/www/#{dir}" do
       owner new_resource.deploy_user
       group new_resource.group
       mode '0755'
+      recursive true
     end
   end
 
@@ -46,14 +39,17 @@ action :config do
       :password    => new_resource.password,
       :host        => new_resource.host
     )
+    notifies :run, "file[database.yml]", :immediately
   end
 
   # copy it to the current folder
-  file "/var/www/#{new_resource.name}/current/config/database.yml" do
+  file "database.yml" do
+    path "/var/www/#{new_resource.name}/current/config/database.yml"
     owner new_resource.deploy_user
     group new_resource.group
     mode '0644'
     content ::File.open("/var/www/#{new_resource.name}/shared/config/database.yml").read
+    action :nothing
   end
 end
 
