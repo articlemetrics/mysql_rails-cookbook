@@ -21,7 +21,7 @@ action :config do
     owner new_resource.deploy_user
     group new_resource.group
     mode '0755'
-    recursive :true
+    recursive true
   end
 
   # create required folders and set permissions
