@@ -27,29 +27,20 @@ action :config do
   end
 
   # create database settings file
-  template "/var/www/#{new_resource.name}/shared/config/database.yml" do
-    source 'database.yml.erb'
-    owner new_resource.deploy_user
-    group new_resource.group
-    mode '0644'
-    cookbook 'mysql_rails'
-    variables(
-      :application => new_resource.name,
-      :username    => new_resource.username,
-      :password    => new_resource.password,
-      :host        => new_resource.host
-    )
-    notifies :create, "file[database.yml]", :immediately
-  end
-
-  # copy it to the current folder
-  file "database.yml" do
-    path "/var/www/#{new_resource.name}/current/config/database.yml"
-    owner new_resource.deploy_user
-    group new_resource.group
-    mode '0644'
-    content ::File.open("/var/www/#{new_resource.name}/shared/config/database.yml").read
-    action :nothing
+  %w{ current shared }.each do |dir|
+    template "/var/www/#{new_resource.name}/#{dir}/config/database.yml" do
+      source 'database.yml.erb'
+      owner new_resource.deploy_user
+      group new_resource.group
+      mode '0644'
+      cookbook 'mysql_rails'
+      variables(
+        :application => new_resource.name,
+        :username    => new_resource.username,
+        :password    => new_resource.password,
+        :host        => new_resource.host
+      )
+    end
   end
 end
 
