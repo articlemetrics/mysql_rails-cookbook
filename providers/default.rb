@@ -16,13 +16,20 @@ action :config do
     shell "/bin/bash"
   end
 
+  # create application root folder
+  directory "/var/www/#{dir}" do
+    owner new_resource.deploy_user
+    group new_resource.group
+    mode '0755'
+    recursive :true
+  end
+
   # create required folders and set permissions
-  %W{ #{new_resource.name} #{new_resource.name}/current #{new_resource.name}/current/config #{new_resource.name}/shared #{new_resource.name}/shared/config }.each do |dir|
+  %W{ #{new_resource.name}/current #{new_resource.name}/current/config #{new_resource.name}/shared #{new_resource.name}/shared/config }.each do |dir|
     directory "/var/www/#{dir}" do
       owner new_resource.deploy_user
       group new_resource.group
       mode '0755'
-      recursive true
     end
   end
 
@@ -31,7 +38,7 @@ action :config do
     source 'database.yml.erb'
     owner new_resource.deploy_user
     group new_resource.group
-    mode '0755'
+    mode '0644'
     cookbook 'mysql_rails'
     variables(
       :application => new_resource.name,
@@ -45,7 +52,7 @@ action :config do
   file "/var/www/#{new_resource.name}/current/config/database.yml" do
     owner new_resource.deploy_user
     group new_resource.group
-    mode '0755'
+    mode '0644'
     content ::File.open("/var/www/#{new_resource.name}/shared/config/database.yml").read
   end
 end
