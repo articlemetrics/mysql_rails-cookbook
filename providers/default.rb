@@ -39,7 +39,7 @@ action :config do
       :password    => new_resource.password,
       :host        => new_resource.host
     )
-    notifies :run, "file[database.yml]", :immediately
+    notifies :create, "file[database.yml]", :immediately
   end
 
   # copy it to the current folder
