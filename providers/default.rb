@@ -30,7 +30,7 @@ action :config do
   %w{ current shared }.each do |dir|
     template "/var/www/#{new_resource.name}/#{dir}/config/database.yml" do
       source 'database.yml.erb'
-      owner new_resource.deploy_user
+      owner new_resource.user
       group new_resource.group
       mode '0644'
       cookbook 'mysql_rails'
