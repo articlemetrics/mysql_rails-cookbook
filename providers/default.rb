@@ -40,7 +40,7 @@ action :config do
         :password    => new_resource.password,
         :host        => new_resource.host
       )
-      action :create_if_missing
+      action :create
     end
   end
 end
