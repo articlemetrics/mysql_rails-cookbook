@@ -19,7 +19,7 @@ action :config do
   # create required folders and set permissions
   %W{ #{new_resource.name} #{new_resource.name}/current #{new_resource.name}/current/config #{new_resource.name}/shared #{new_resource.name}/shared/config }.each do |dir|
     directory "/var/www/#{dir}" do
-      owner new_resource.deploy_user
+      owner new_resource.user
       group new_resource.group
       mode '0755'
       recursive true
@@ -46,6 +46,7 @@ action :config do
 end
 
 action :setup do
+  run_context.include_recipe 'ruby::empty'
   run_context.include_recipe 'mysql::server'
   run_context.include_recipe 'database::mysql'
 
