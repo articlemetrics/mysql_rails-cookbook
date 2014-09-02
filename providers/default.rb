@@ -55,10 +55,15 @@ action :setup do
 
   # create database user with all privileges for the table we just created
   mysql_database_user new_resource.username do
+    connection mysql_connection_info
+    password   new_resource.password
+    action     :create
+  end
+
+  mysql_database_user new_resource.username do
     connection    mysql_connection_info
     database_name "#{new_resource.name}_#{new_resource.rails_env}"
     host          new_resource.host
-    password      new_resource.password
     privileges    [:all]
     action        :grant
   end
@@ -80,6 +85,6 @@ end
 
 def mysql_connection_info
   { host:      new_resource.host,
-    username:  new_resource.username,
-    password:  new_resource.password }
+    username:  'root',
+    password:  node['mysql']['server_root_password'] }
 end
