@@ -21,7 +21,7 @@ action :config do
     directory "/var/www/#{dir}" do
       owner new_resource.deploy_user
       group new_resource.group
-      mode '0755'
+      mode "0755"
       recursive true
     end
   end
@@ -32,7 +32,7 @@ action :config do
       source 'database.yml.erb'
       owner new_resource.deploy_user
       group new_resource.group
-      mode '0644'
+      mode "0755"
       cookbook 'mysql_rails'
       variables(
         :application => new_resource.name,
