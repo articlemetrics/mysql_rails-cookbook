@@ -52,6 +52,16 @@ action :setup do
     connection mysql_connection_info
     action :create
   end
+
+  # create database user with all privileges for the table we just created
+  mysql_database_user new_resource.username do
+    connection    mysql_connection_info
+    database_name "#{new_resource.name}_#{new_resource.rails_env}"
+    host          new_resource.host
+    password      new_resource.password
+    privileges    [:all]
+    action        :grant
+  end
 end
 
 action :drop do
