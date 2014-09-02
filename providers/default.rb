@@ -10,7 +10,7 @@ end
 
 action :config do
   # create user
-  user new_resource.deploy_user do
+  user new_resource.user do
     system true
     gid new_resource.group
     shell "/bin/bash"
