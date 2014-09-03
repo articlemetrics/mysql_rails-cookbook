@@ -64,7 +64,6 @@ action :setup do
 
   mysql_database_user new_resource.username do
     connection    mysql_connection_info
-    database_name "#{new_resource.name}_#{new_resource.rails_env}"
     host          new_resource.host
     privileges    [:all]
     action        :grant
