@@ -12,10 +12,12 @@ action :create do
   # set mysql root password
   node.set['mysql']['server_root_password'] = new_resource.root_password
 
+  # install mysql
   run_context.include_recipe 'ruby::empty'
   run_context.include_recipe 'mysql::server'
   run_context.include_recipe 'database::mysql'
 
+  # create database
   mysql_database "#{new_resource.name}_#{new_resource.rails_env}" do
     connection mysql_connection_info
     action :create
@@ -25,14 +27,9 @@ action :create do
   mysql_database_user new_resource.username do
     connection mysql_connection_info
     password   new_resource.password
-    action     :create
-  end
-
-  mysql_database_user new_resource.username do
-    connection    mysql_connection_info
-    host          new_resource.host
-    privileges    [:all]
-    action        :grant
+    host       new_resource.host
+    privileges [:all]
+    action     [:create, :grant]
   end
 end
 
