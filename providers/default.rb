@@ -9,6 +9,9 @@ def load_current_resource
 end
 
 action :create do
+  # set mysql root password
+  node.set['mysql']['server_root_password'] = new_resource.root_password
+
   run_context.include_recipe 'ruby::empty'
   run_context.include_recipe 'mysql::server'
   run_context.include_recipe 'database::mysql'
@@ -43,5 +46,5 @@ end
 def mysql_connection_info
   { host:      new_resource.host,
     username:  'root',
-    password:  new_resource.server_root_password }
+    password:  new_resource.root_password }
 end
