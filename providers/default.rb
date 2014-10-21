@@ -43,5 +43,5 @@ end
 def mysql_connection_info
   { host:      new_resource.host,
     username:  'root',
-    password:  node['mysql']['server_root_password'] }
+    password:  new_resource.server_root_password }
 end
