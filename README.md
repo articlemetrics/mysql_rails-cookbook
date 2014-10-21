@@ -31,16 +31,14 @@ The `msql_rails` LWRP installs and configures MySQL for Rails.
 
 * `name` - Name of the application. Used together with `rails_env` for the name of the MySQL database.
 * `rails_env` - Rails enviroment, defaults to `production`.
-* `deploy_user` - Owner for application folder. Defaults to `www-data`.
-* `group` - Group for application folder. Defaults to `www-data`.
-* `db_user` - MySQL user. Defaults to `root`.
-* `db_password` - MySQL password for `db_user`. Defaults to an empty string.
+* `user` - MySQL user. Defaults to `root`.
+* `password` - MySQL password for `db_user`. Defaults to an empty string.
 * `host` - MySQL host. Defaults to `localhost`.
 
 
 Usage
 -----
-For example, to run install MySQL, create a database named `myproj_production`, and create a `database.yml` configuration file, run:
+For example, to run install MySQL, create a database named `myproj_production`, and a user named `boss`, run:
 
 ```ruby
 mysql_rails "myproj" do
