@@ -18,7 +18,7 @@ action :create do
   run_context.include_recipe 'database::mysql'
 
   # create database
-  mysql_database "#{new_resource.name}_#{new_resource.rails_env}" do
+  mysql_database new_resource.name do
     connection mysql_connection_info
     action :create
   end
