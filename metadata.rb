@@ -7,4 +7,4 @@ long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           "0.3.8"
 depends           "mysql"
 depends           "database"
-depends           "ruby", "~> 0.5.0"
+depends           "ruby", "~> 0.6.0"
