@@ -16,6 +16,7 @@ action :create do
   run_context.include_recipe 'ruby::empty'
 
   mysql_service 'default' do
+    version "5.6"
     action [:create, :start]
   end
 
