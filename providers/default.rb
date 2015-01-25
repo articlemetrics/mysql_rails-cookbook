@@ -19,6 +19,12 @@ action :create do
     action [:create, :start]
   end
 
+  mysql_config 'default' do
+    source "my.cnf.erb"
+    notifies :restart, 'mysql_service[default]'
+    action :create
+  end
+
   run_context.include_recipe 'database::mysql'
 
   # create database
