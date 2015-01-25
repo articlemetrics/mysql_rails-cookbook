@@ -10,24 +10,11 @@ end
 
 action :create do
   # set mysql root password
-  node.set['mysql']['initial_root_password'] = new_resource.root_password
+  node.set['mysql']['server_root_password'] = new_resource.root_password
 
   # install mysql
   run_context.include_recipe 'ruby::empty'
-
-  mysql_service 'default' do
-    version "5.6"
-    initial_root_password new_resource.root_password
-    action [:create, :start]
-  end
-
-  mysql_config 'default' do
-    source "default.cnf.erb"
-    cookbook "mysql_rails"
-    notifies :restart, 'mysql_service[default]'
-    action :create
-  end
-
+  run_context.include_recipe 'mysql::server'
   run_context.include_recipe 'database::mysql'
 
   # create database
