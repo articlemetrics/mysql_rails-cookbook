@@ -17,6 +17,7 @@ action :create do
 
   mysql_service 'default' do
     version "5.6"
+    initial_root_password new_resource.root_password
     action [:create, :start]
   end
 
