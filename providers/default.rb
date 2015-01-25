@@ -20,7 +20,7 @@ action :create do
   end
 
   mysql_config 'default' do
-    source "rails.cnf.erb"
+    source "default.cnf.erb"
     cookbook "mysql_rails"
     notifies :restart, 'mysql_service[default]'
     action :create
