@@ -12,9 +12,12 @@ action :create do
   # set mysql root password
   node.set['mysql']['server_root_password'] = new_resource.root_password
 
-  # install mysql
-  run_context.include_recipe 'ruby::empty'
-  run_context.include_recipe 'mysql::server'
+  # install mysql if host is localhost
+  if new_resource.host == "localhost"
+    run_context.include_recipe 'ruby::empty'
+    run_context.include_recipe 'mysql::server'
+  end
+
   run_context.include_recipe 'database::mysql'
 
   # create database
